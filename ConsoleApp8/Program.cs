@@ -28,6 +28,7 @@ namespace ConsoleApp8
 
             while(true)
             {
+                Console.Clear();
                 Console.WriteLine("Функції:");
 
                 Console.WriteLine("1 - Пошук інформації про команду за назвою.");
@@ -43,69 +44,87 @@ namespace ConsoleApp8
                 Console.WriteLine("11 - Видалити команду. Пошук команди для видалення проводиться за назвою команди і міста. Перед видаленням,\r\nдодаток має запитати користувача, чи потрібно видаляти\r\nкоманду.");
                 Console.WriteLine(":");
                 string x = Console.ReadLine();
-                switch(x)
+                try
                 {
-                    case "1":
-                        Console.Clear();
-                        Console.WriteLine("Пошук інформації про команду за назвою. \n Введіть назву:");
-                        string getName = Console.ReadLine();
-                        Print(AllTeams.FirstOrDefault(t => t.TeamName.Equals(getName)));
-                        break;
-                    case "2":
-                        Console.Clear();
-                        Console.WriteLine("\nПошук команд за назвою міста. \nВведіть назву міста:");
-                        string getCity = Console.ReadLine();
-                        Print(AllTeams.Where(t => t.City.Equals(getCity)).ToList());
-                        break;
-                    case "3":
-                        Console.Clear();
-                        Console.WriteLine("\nПошук інформації за назвою команди і міста. \nВведіть назву команди:");
-                        string getNameAndCity = Console.ReadLine();
-                        Console.WriteLine("Введіть назву міста:");
-                        string getCityAndTeam = Console.ReadLine();
-                        Print(AllTeams.FirstOrDefault(t => t.TeamName.Equals(getNameAndCity) && t.City.Equals(getCityAndTeam)));
-                        break;
-                    case "4":
-                        Console.Clear();
-                        Console.WriteLine("Команда з найбільшою кількістю перемог:");
-                        Print(AllTeams.OrderByDescending(t => t.Wins).FirstOrDefault());
-                        break;
-                    case "5":
-                        Console.Clear();
-                        Console.WriteLine("Команда з найбільшою кількістю поразок");
-                        Print(AllTeams.OrderByDescending(t => t.Losses).FirstOrDefault());
-                        break;
-                    case "6":
-                        Console.Clear();
-                        Console.WriteLine("Команда з найбільшою кількістю ігор у нічию");
-                        Print(AllTeams.OrderByDescending(t => t.Draws).FirstOrDefault());
-                        break;
-                    case "7":
-                        Console.Clear();
-                        Console.WriteLine("Команда з найбільшою кількістю забитих голів");
-                        Print(AllTeams.OrderByDescending(t => t.GoalsScored).FirstOrDefault());
-                        break;
-                    case "8":
-                        Console.Clear();
-                        Console.WriteLine("Команда з найбільшою кількістю пропущених голів");
-                        Print(AllTeams.OrderByDescending(t => t.GoalsConceded).FirstOrDefault());
-                        break;
-                    case "9":
-                        Console.Clear();
-                        AddNewTeam(teamSv);
-                        break;
-                    case "10":
-                        Console.Clear();
-                        UpdateTeam(teamSv);
-                        break;
-                    case "11":
-                        Console.Clear();
-                        DeleteTeam(teamSv);
-                        break;
-                    default:
-                        break;
+                    switch (x)
+                    {
+                        case "1":
+                            Console.Clear();
+                            Console.WriteLine("Пошук інформації про команду за назвою. \n Введіть назву:");
+                            string getName = Console.ReadLine();
+                            Print(AllTeams.FirstOrDefault(t => t.TeamName.Equals(getName)));
+                            Console.ReadLine();
+                            break;
+                        case "2":
+                            Console.Clear();
+                            Console.WriteLine("\nПошук команд за назвою міста. \nВведіть назву міста:");
+                            string getCity = Console.ReadLine();
+                            Print(AllTeams.Where(t => t.City.Equals(getCity)).ToList());
+                            Console.ReadLine();
+                            break;
+                        case "3":
+                            Console.Clear();
+                            Console.WriteLine("\nПошук інформації за назвою команди і міста. \nВведіть назву команди:");
+                            string getNameAndCity = Console.ReadLine();
+                            Console.WriteLine("Введіть назву міста:");
+                            string getCityAndTeam = Console.ReadLine();
+                            Print(AllTeams.FirstOrDefault(t => t.TeamName.Equals(getNameAndCity) && t.City.Equals(getCityAndTeam)));
+                            Console.ReadLine();
+                            break;
+                        case "4":
+                            Console.Clear();
+                            Console.WriteLine("Команда з найбільшою кількістю перемог:");
+                            Print(AllTeams.OrderByDescending(t => t.Wins).FirstOrDefault());
+                            Console.ReadLine();
+                            break;
+                        case "5":
+                            Console.Clear();
+                            Console.WriteLine("Команда з найбільшою кількістю поразок");
+                            Print(AllTeams.OrderByDescending(t => t.Losses).FirstOrDefault());
+                            Console.ReadLine();
+                            break;
+                        case "6":
+                            Console.Clear();
+                            Console.WriteLine("Команда з найбільшою кількістю ігор у нічию");
+                            Print(AllTeams.OrderByDescending(t => t.Draws).FirstOrDefault());
+                            Console.ReadLine();
+                            break;
+                        case "7":
+                            Console.Clear();
+                            Console.WriteLine("Команда з найбільшою кількістю забитих голів");
+                            Print(AllTeams.OrderByDescending(t => t.GoalsScored).FirstOrDefault());
+                            Console.ReadLine();
+                            break;
+                        case "8":
+                            Console.Clear();
+                            Console.WriteLine("Команда з найбільшою кількістю пропущених голів");
+                            Print(AllTeams.OrderByDescending(t => t.GoalsConceded).FirstOrDefault());
+                            Console.ReadLine();
+                            break;
+                        case "9":
+                            Console.Clear();
+                            AddNewTeam(teamSv);
+                            Console.ReadLine();
+                            break;
+                        case "10":
+                            Console.Clear();
+                            UpdateTeam(teamSv);
+                            Console.ReadLine();
+                            break;
+                        case "11":
+                            Console.Clear();
+                            DeleteTeam(teamSv);
+                            Console.ReadLine();
+                            break;
+                        default:
+                            break;
+                    }
                 }
-
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    Console.ReadLine();
+                }
             }
         }
 
