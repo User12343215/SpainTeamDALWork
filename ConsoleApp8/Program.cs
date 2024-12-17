@@ -511,6 +511,8 @@ namespace ConsoleApp8
                 Console.WriteLine($"Немає матчів на {searchDate.ToShortDateString()}.");
             }
 
+
+
         }
         public static List<Match> GenerateMatches(Team[] teams, Player[] players, int numberOfMatches)
         {
@@ -534,8 +536,8 @@ namespace ConsoleApp8
 
                 var match = new Match
                 {
-                    Team1Id = team1.TeamId,
-                    Team2Id = team2.TeamId,
+                    Team1Id = team1.Id,
+                    Team2Id = team2.Id,
                     Team1Goals = team1Goals,
                     Team2Goals = team2Goals,
                     MatchDate = DateTime.Now.AddDays(-random.Next(1, 30))
@@ -544,14 +546,14 @@ namespace ConsoleApp8
                 List<Goal> matchGoals = new List<Goal>();
                 for (int j = 0; j < team1Goals; j++)
                 {
-                    var randomPlayer = players.Where(p => p.TeamId == team1.TeamId).OrderBy(p => random.Next()).FirstOrDefault();
-                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.MatchId });
+                    var randomPlayer = players.Where(p => p.TeamId == team1.Id).OrderBy(p => random.Next()).FirstOrDefault();
+                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.Id });
                 }
 
                 for (int j = 0; j < team2Goals; j++)
                 {
-                    var randomPlayer = players.Where(p => p.TeamId == team2.TeamId).OrderBy(p => random.Next()).FirstOrDefault();
-                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.MatchId });
+                    var randomPlayer = players.Where(p => p.TeamId == team2.Id).OrderBy(p => random.Next()).FirstOrDefault();
+                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.Id });
                 }
 
                 match.Goals = matchGoals;
@@ -562,45 +564,4 @@ namespace ConsoleApp8
             return generatedMatches;
         }
     }
-
-}
-public class Team
-{
-    public int TeamId { get; set; }
-    public string TeamName { get; set; }
-    public string City { get; set; }
-    public int Wins { get; set; }
-    public int Losses { get; set; }
-    public int Draws { get; set; }
-    public int GoalsScored { get; set; }
-    public int GoalsConceded { get; set; }
-}
-
-public class Player
-{
-    public int PlayerNumber { get; set; }
-    public string FullName { get; set; }
-    public string Country { get; set; }
-    public string Position { get; set; }
-    public int TeamId { get; set; }
-    public Team Team { get; set; }
-}
-
-public class Goal
-{
-    public Player Player { get; set; }
-    public int MatchId { get; set; }
-}
-
-public class Match
-{
-    public int MatchId { get; set; }
-    public int Team1Id { get; set; }
-    public int Team2Id { get; set; }
-    public Team Team1 { get; set; }
-    public Team Team2 { get; set; }
-    public int Team1Goals { get; set; }
-    public int Team2Goals { get; set; }
-    public DateTime MatchDate { get; set; }
-    public List<Goal> Goals { get; set; }
 }
