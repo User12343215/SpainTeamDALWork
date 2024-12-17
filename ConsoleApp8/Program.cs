@@ -37,17 +37,7 @@ namespace ConsoleApp8
                     new Goal { Player = players[4], MatchId = 3 }
                 };
 
-            var matches = new[]
-                {
-                new Match { Team1Id = 1, Team2Id = 2, Team1Goals = 3, Team2Goals = 1, Team1 = teams[0], Team2 = teams[1], MatchDate = DateTime.Now, Goals = new List<Goal>  { goals[0], goals[1] } },
-                new Match { Team1Id = 2, Team2Id = 3, Team1Goals = 2, Team2Goals = 2, Team1 = teams[1], Team2 = teams[2], MatchDate = DateTime.Now.AddDays(-1), Goals =  new List<Goal>  { goals[2] } },
-                new Match { Team1Id = 3, Team2Id = 4, Team1Goals = 1, Team2Goals = 0, Team1 = teams[2], Team2 = teams[3], MatchDate = DateTime.Now.AddDays(-2), Goals =  new List<Goal>  { goals[3], goals[4] } }
-                };
-
-
-
-
-
+            var matches = GenerateMatches(teams, players, 10);
 
             foreach (var team in teams)
             {
@@ -520,10 +510,97 @@ namespace ConsoleApp8
             {
                 Console.WriteLine($"Немає матчів на {searchDate.ToShortDateString()}.");
             }
+
         }
+        public static List<Match> GenerateMatches(Team[] teams, Player[] players, int numberOfMatches)
+        {
+            Random random = new Random();
+            List<Match> generatedMatches = new List<Match>();
 
+            for (int i = 0; i < numberOfMatches; i++)
+            {
+                int team1Index = random.Next(teams.Length);
+                int team2Index = random.Next(teams.Length);
+                while (team1Index == team2Index)
+                {
+                    team2Index = random.Next(teams.Length);
+                }
 
+                var team1 = teams[team1Index];
+                var team2 = teams[team2Index];
 
+                int team1Goals = random.Next(0, 5);
+                int team2Goals = random.Next(0, 5);
 
+                var match = new Match
+                {
+                    Team1Id = team1.TeamId,
+                    Team2Id = team2.TeamId,
+                    Team1Goals = team1Goals,
+                    Team2Goals = team2Goals,
+                    MatchDate = DateTime.Now.AddDays(-random.Next(1, 30))
+                };
+
+                List<Goal> matchGoals = new List<Goal>();
+                for (int j = 0; j < team1Goals; j++)
+                {
+                    var randomPlayer = players.Where(p => p.TeamId == team1.TeamId).OrderBy(p => random.Next()).FirstOrDefault();
+                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.MatchId });
+                }
+
+                for (int j = 0; j < team2Goals; j++)
+                {
+                    var randomPlayer = players.Where(p => p.TeamId == team2.TeamId).OrderBy(p => random.Next()).FirstOrDefault();
+                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.MatchId });
+                }
+
+                match.Goals = matchGoals;
+
+                generatedMatches.Add(match);
+            }
+
+            return generatedMatches;
+        }
     }
+
+}
+public class Team
+{
+    public int TeamId { get; set; }
+    public string TeamName { get; set; }
+    public string City { get; set; }
+    public int Wins { get; set; }
+    public int Losses { get; set; }
+    public int Draws { get; set; }
+    public int GoalsScored { get; set; }
+    public int GoalsConceded { get; set; }
+}
+
+public class Player
+{
+    public int PlayerNumber { get; set; }
+    public string FullName { get; set; }
+    public string Country { get; set; }
+    public string Position { get; set; }
+    public int TeamId { get; set; }
+    public Team Team { get; set; }
+}
+
+public class Goal
+{
+    public Player Player { get; set; }
+    public int MatchId { get; set; }
+}
+
+public class Match
+{
+    public int MatchId { get; set; }
+    public int Team1Id { get; set; }
+    public int Team2Id { get; set; }
+    public Team Team1 { get; set; }
+    public Team Team2 { get; set; }
+    public int Team1Goals { get; set; }
+    public int Team2Goals { get; set; }
+    public DateTime MatchDate { get; set; }
+    public List<Goal> Goals { get; set; }
 }
