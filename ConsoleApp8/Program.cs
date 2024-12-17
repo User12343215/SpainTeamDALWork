@@ -39,9 +39,9 @@ namespace ConsoleApp8
 
             var matches = new[]
                 {
-                new Match { Team1Id = 1, Team2Id = 2, Team1Goals = 3, Team2Goals = 1, Team1 = teams[0], Team2 = teams[1], MatchDate = DateTime.Now, Goals = { goals[0], goals[1] } },
-                new Match { Team1Id = 2, Team2Id = 3, Team1Goals = 2, Team2Goals = 2, Team1 = teams[1], Team2 = teams[2], MatchDate = DateTime.Now.AddDays(-1), Goals = { goals[2] } },
-                new Match { Team1Id = 3, Team2Id = 4, Team1Goals = 1, Team2Goals = 0, Team1 = teams[2], Team2 = teams[3], MatchDate = DateTime.Now.AddDays(-2), Goals = { goals[3], goals[4] } }
+                new Match { Team1Id = 1, Team2Id = 2, Team1Goals = 3, Team2Goals = 1, Team1 = teams[0], Team2 = teams[1], MatchDate = DateTime.Now, Goals = new List<Goal>  { goals[0], goals[1] } },
+                new Match { Team1Id = 2, Team2Id = 3, Team1Goals = 2, Team2Goals = 2, Team1 = teams[1], Team2 = teams[2], MatchDate = DateTime.Now.AddDays(-1), Goals =  new List<Goal>  { goals[2] } },
+                new Match { Team1Id = 3, Team2Id = 4, Team1Goals = 1, Team2Goals = 0, Team1 = teams[2], Team2 = teams[3], MatchDate = DateTime.Now.AddDays(-2), Goals =  new List<Goal>  { goals[3], goals[4] } }
                 };
 
 
