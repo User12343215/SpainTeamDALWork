@@ -178,7 +178,7 @@ namespace ConsoleApp8
                             ShowMatchesForTeam(matchSv);
                             break;
                         case "19":
-                            ShowPlayersScoredOnDate(goals);
+                            ShowPlayersScoredOnDate(matchSv);
                             break;
                         default:
                             break;
