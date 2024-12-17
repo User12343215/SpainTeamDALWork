@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +11,37 @@ namespace DAL
     public class TeamService
     {
 
-        private readonly AppDbContext _context;
+        private readonly TeamProvider _teamP;
 
         public TeamService()
         {
-            _context = new AppDbContext();
+            var context = new AppDbContext();
+            _teamP = new TeamProvider(context);
         }
 
-        public void Add(Team team)
+        public void AddTeam(Team team)
         {
-            _context.Teams.Add(team);
-            _context.SaveChanges();
+            _teamP.Add(team);
         }
 
-        public void Update(Team team)
+        public void UpdateTeam(Team team)
         {
-            _context.Teams.Update(team);
-
-            _context.SaveChanges();
+            _teamP.Update(team);
         }
 
-        public void Delete(Team team)
+        public void DeleteTeam(Team team)
         {
-            _context.Remove(team);
+            _teamP.Delete(team);
         }
 
-        public Team Get(int id)
+        public Team GetTeam(int id)
         {
-            return _context.Teams.First(x => x.Id == id);
+            return _teamP.Get(id);
         }
 
-        public List<Team> GetAll()
-        { 
-            return _context.Teams.ToList(); 
+        public List<Team> GetAllTeams()
+        {
+            return _teamP.GetAll(); 
         }
 
     }
