@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class SpainFootbalCommandExtention : Migration
+    public partial class NewSpainFix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,41 +31,41 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-            name: "Matches",
-            columns: table => new
-            {
-                Id = table.Column<int>(nullable: false)
-                    .Annotation("SqlServer:Identity", "1, 1"),
-                Team1Id = table.Column<int>(nullable: false),
-                Team2Id = table.Column<int>(nullable: false),
-                Team1Goals = table.Column<int>(nullable: false),
-                Team2Goals = table.Column<int>(nullable: false),
-                MatchDate = table.Column<DateTime>(nullable: false)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_Matches", x => x.Id);
-                table.ForeignKey(
-                    name: "FK_Matches_Teams_Team1Id",
-                    column: x => x.Team1Id,
-                    principalTable: "Teams",
-                    principalColumn: "Id",
-                    onDelete: ReferentialAction.NoAction);
-                table.ForeignKey(
-                    name: "FK_Matches_Teams_Team2Id",
-                    column: x => x.Team2Id,
-                    principalTable: "Teams",
-                    principalColumn: "Id",
-                    onDelete: ReferentialAction.NoAction);
-            });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Matches",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserNumber = table.Column<int>(type: "int", nullable: false),
+                    Team1Id = table.Column<int>(type: "int", nullable: false),
+                    Team2Id = table.Column<int>(type: "int", nullable: false),
+                    Team1Goals = table.Column<int>(type: "int", nullable: false),
+                    Team2Goals = table.Column<int>(type: "int", nullable: false),
+                    MatchDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Matches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Matches_Teams_Team1Id",
+                        column: x => x.Team1Id,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Matches_Teams_Team2Id",
+                        column: x => x.Team2Id,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Players",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlayerNumber = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -73,9 +73,9 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Players", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Teams_TeamId",
+                        name: "FK_Players_Teams_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
@@ -88,7 +88,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    PlayerId = table.Column<int>(type: "int", nullable: false),
                     MatchId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -101,11 +101,11 @@ namespace DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Goals_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Goals_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -114,9 +114,9 @@ namespace DAL.Migrations
                 column: "MatchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goals_UserId",
+                name: "IX_Goals_PlayerId",
                 table: "Goals",
-                column: "UserId");
+                column: "PlayerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Matches_Team1Id",
@@ -129,8 +129,8 @@ namespace DAL.Migrations
                 column: "Team2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_TeamId",
-                table: "Users",
+                name: "IX_Players_TeamId",
+                table: "Players",
                 column: "TeamId");
         }
 
@@ -144,7 +144,7 @@ namespace DAL.Migrations
                 name: "Matches");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Players");
 
             migrationBuilder.DropTable(
                 name: "Teams");
