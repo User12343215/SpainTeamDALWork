@@ -1,5 +1,7 @@
 ﻿using DAL;
 using DAL.Entities;
+using System.Text.RegularExpressions;
+using Match = DAL.Entities.Match;
 
 namespace ConsoleApp8
 {
@@ -8,7 +10,7 @@ namespace ConsoleApp8
         static void Main(string[] args)
         {
             var teamSv = new TeamService();
-            var userSv = new UserService();
+            var playerSv = new PlayerService();
             var matchSv = new MatchService();
 
             var teams = new[]
@@ -19,25 +21,34 @@ namespace ConsoleApp8
                     new Team { TeamName = "Sevilla FC", City = "Севілья", Wins = 8, Losses = 6, Draws = 4, GoalsScored = 30, GoalsConceded = 22 }
                 };
 
-            var users = new[]
+            var players = new[]
                 {
-                   new User { UserNumber = 1, FullName = "User 1", Country = "Spain", Position = "Forward", TeamId = 1, Team = teams[0] },
-                    new User { UserNumber = 2, FullName = "User 2", Country = "Spain", Position = "Midfielder", TeamId = 1, Team = teams[0] },
-                    new User { UserNumber = 3, FullName = "User 3", Country = "Spain", Position = "Defender", TeamId = 2, Team = teams[1] },
-                    new User { UserNumber = 4, FullName = "User 4", Country = "Spain", Position = "Goalkeeper", TeamId = 3, Team = teams[2] },
-                    new User { UserNumber = 5, FullName = "User 5", Country = "Spain", Position = "Midfielder", TeamId = 4, Team = teams[3] }
+                   new Player { PlayerNumber = 1, FullName = "Player 1", Country = "Spain", Position = "Forward", TeamId = 1, Team = teams[0] },
+                    new Player { PlayerNumber = 2, FullName = "Player 2", Country = "Spain", Position = "Midfielder", TeamId = 1, Team = teams[0] },
+                    new Player { PlayerNumber = 3, FullName = "Player 3", Country = "Spain", Position = "Defender", TeamId = 2, Team = teams[1] },
+                    new Player { PlayerNumber = 4, FullName = "Player 4", Country = "Spain", Position = "Goalkeeper", TeamId = 3, Team = teams[2] },
+                    new Player { PlayerNumber = 5, FullName = "Player 5", Country = "Spain", Position = "Midfielder", TeamId = 4, Team = teams[3] }
                 };
 
             List<Goal> goals = new List<Goal>
                 {
-                    new Goal { User = users[0], MatchId = 1 },
-                    new Goal { User = users[1], MatchId = 1 },
-                    new Goal { User = users[2], MatchId = 2 },
-                    new Goal { User = users[3], MatchId = 3 },
-                    new Goal { User = users[4], MatchId = 3 }
+                    new Goal { Player = players[0], MatchId = 1 },
+                    new Goal { Player = players[1], MatchId = 1 },
+                    new Goal { Player = players[2], MatchId = 2 },
+                    new Goal { Player = players[3], MatchId = 3 },
+                    new Goal { Player = players[4], MatchId = 3 }
                 };
 
-            var matches = GenerateMatches(teams, users, 10);
+            var matches = GenerateMatches(teams, players, 10);
+
+            foreach (var team in teams)
+                teamSv.AddTeam(team);
+
+            foreach (var match in matches)
+                matchSv.AddMatch(match);
+
+            foreach (var player in players)
+                playerSv.AddPlayer(player);
 
             foreach (var team in teams)
             {
@@ -181,16 +192,16 @@ namespace ConsoleApp8
                             ShowMatchesForTeam(matchSv);
                             break;
                         case "19":
-                            ShowUsersScoredOnDate(matchSv);
+                            ShowPlayersScoredOnDate(matchSv);
                             break;
                         case "20":
                             Console.Clear();
                             Console.WriteLine("Введіть назву команди:");
                             string teamNameForTopScorers = Console.ReadLine();
-                            ShowTopScorersByTeam(userSv, teamSv, teamNameForTopScorers);
+                            ShowTopScorersByTeam(playerSv, teamSv, teamNameForTopScorers);
                             break;
                         case "21":
-                            ShowTopScorersOverall(userSv);
+                            ShowTopScorersOverall(playerSv);
                             break;
                         case "22":
                             ShowTopTeamsByGoals(teamSv);
@@ -366,7 +377,7 @@ namespace ConsoleApp8
             }
             else
             {
-                var match = new Match
+                var match = new DAL.Entities.Match
                 {
                     Team1 = new Team { TeamName = team1Name },
                     Team2 = new Team { TeamName = team2Name },
@@ -515,7 +526,7 @@ namespace ConsoleApp8
             Console.ReadLine();
         }
 
-        private static void ShowUsersScoredOnDate(MatchService matchSv)
+        private static void ShowPlayersScoredOnDate(MatchService matchSv)
         {
             Console.WriteLine("Введіть дату для пошуку гравців, які забили голи:");
             DateTime searchDate;
@@ -535,11 +546,11 @@ namespace ConsoleApp8
                     Console.WriteLine($"Матч: {match.Team1.TeamName} vs {match.Team2.TeamName}, Дата: {match.MatchDate}");
                     Console.WriteLine("Гравці, які забили голи:");
 
-                    var usersWhoScored = match.Goals.Select(g => g.User.FullName).Distinct();
+                    var playersWhoScored = match.Goals.Select(g => g.Player.FullName).Distinct();
 
-                    foreach (var user in usersWhoScored)
+                    foreach (var player in playersWhoScored)
                     {
-                        Console.WriteLine(user);
+                        Console.WriteLine(player);
                     }
                     Console.WriteLine();
                 }
@@ -551,7 +562,7 @@ namespace ConsoleApp8
             Console.ReadLine();
         }
 
-        private static void ShowTopScorersByTeam(UserService userSv, TeamService teamSv, string teamName)
+        private static void ShowTopScorersByTeam(PlayerService playerSv, TeamService teamSv, string teamName)
         {
                 Console.Clear();
                 var team = teamSv.GetAllTeams().FirstOrDefault(t => t.TeamName == teamName);
@@ -561,7 +572,7 @@ namespace ConsoleApp8
                     return;
                 }
 
-                var topScorers = userSv.GetAllUsers().Where(p=>p.TeamId == team.Id)
+                var topScorers = playerSv.GetAllPlayers().Where(p=>p.TeamId == team.Id)
                     .GroupBy(p => p)
                     .OrderByDescending(g => g.Count())
                     .Take(3);
@@ -572,10 +583,10 @@ namespace ConsoleApp8
                 Console.ReadLine();
         }
 
-        private static void ShowTopScorersOverall(UserService userSv)
+        private static void ShowTopScorersOverall(PlayerService playerSv)
         {
             Console.Clear();
-            var topScorers = userSv.GetAllUsers()
+            var topScorers = playerSv.GetAllPlayers()
                 .GroupBy(p => p)
                 .OrderByDescending(g => g.Count())
                 .Take(3);
@@ -643,7 +654,7 @@ namespace ConsoleApp8
             Console.ReadLine();
         }
 
-        public static List<Match> GenerateMatches(Team[] teams, User[] users, int numberOfMatches)
+        public static List<Match> GenerateMatches(Team[] teams, Player[] players, int numberOfMatches)
         {
             Random random = new Random();
             List<Match> generatedMatches = new List<Match>();
@@ -663,7 +674,7 @@ namespace ConsoleApp8
                 int team1Goals = random.Next(0, 5);
                 int team2Goals = random.Next(0, 5);
 
-                var match = new Match
+                var match = new DAL.Entities.Match
                 {
                     Team1Id = team1.Id,
                     Team2Id = team2.Id,
@@ -675,14 +686,14 @@ namespace ConsoleApp8
                 List<Goal> matchGoals = new List<Goal>();
                 for (int j = 0; j < team1Goals; j++)
                 {
-                    var randomUser = users.Where(p => p.TeamId == team1.Id).OrderBy(p => random.Next()).FirstOrDefault();
-                    matchGoals.Add(new Goal { User = randomUser, MatchId = match.Id });
+                    var randomPlayer = players.Where(p => p.TeamId == team1.Id).OrderBy(p => random.Next()).FirstOrDefault();
+                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.Id });
                 }
 
                 for (int j = 0; j < team2Goals; j++)
                 {
-                    var randomUser = users.Where(p => p.TeamId == team2.Id).OrderBy(p => random.Next()).FirstOrDefault();
-                    matchGoals.Add(new Goal { User = randomUser, MatchId = match.Id });
+                    var randomPlayer = players.Where(p => p.TeamId == team2.Id).OrderBy(p => random.Next()).FirstOrDefault();
+                    matchGoals.Add(new Goal { Player = randomPlayer, MatchId = match.Id });
                 }
 
                 match.Goals = matchGoals;

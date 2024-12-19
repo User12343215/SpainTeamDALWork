@@ -9,7 +9,7 @@ namespace DAL.Entities
     public class Goal
     {
         public int Id { get; set; }
-        public User User { get; set; }
+        public Player Player { get; set; }
         public int MatchId { get; set; }
     }
 }

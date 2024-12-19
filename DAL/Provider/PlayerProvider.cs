@@ -7,41 +7,41 @@ using System.Threading.Tasks;
 
 namespace DAL.Provider
 {
-    internal class UserProvider
+    internal class PlayerProvider
     {
         private readonly AppDbContext _context;
 
-        public UserProvider(AppDbContext context)
+        public PlayerProvider(AppDbContext context)
         {
             _context = context;
         }
 
-        public void Add(User user)
+        public void Add(Player player)
         {
-            _context.Users.Add(user);
+            _context.Players.Add(player);
             _context.SaveChanges();
         }
 
-        public void Update(User user)
+        public void Update(Player player)
         {
-            _context.Users.Update(user);
+            _context.Players.Update(player);
 
             _context.SaveChanges();
         }
 
-        public void Delete(User user)
+        public void Delete(Player player)
         {
-            _context.Remove(user);
+            _context.Remove(player);
         }
 
-        public User Get(int id)
+        public Player Get(int id)
         {
-            return _context.Users.First(x => x.Id == id);
+            return _context.Players.First(x => x.Id == id);
         }
 
-        public List<User> GetAll()
+        public List<Player> GetAll()
         {
-            return _context.Users.ToList();
+            return _context.Players.ToList();
         }
     }
 }

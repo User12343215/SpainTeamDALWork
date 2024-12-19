@@ -8,40 +8,40 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class UserService
+    public class PlayerService
     {
 
-        private readonly UserProvider _userP;
+        private readonly PlayerProvider _playerP;
 
-        public UserService()
+        public PlayerService()
         {
             var context = new AppDbContext();
-            _userP = new UserProvider(context);
+            _playerP = new PlayerProvider(context);
         }
 
-        public void AddUser(User user)
+        public void AddPlayer(Player player)
         {
-            _userP.Add(user);
+            _playerP.Add(player);
         }
 
-        public void UpdateUser(User user)
+        public void UpdatePlayer(Player player)
         {
-            _userP.Update(user);
+            _playerP.Update(player);
         }
 
-        public void DeleteUser(User user)
+        public void DeletePlayer(Player player)
         {
-            _userP.Delete(user);
+            _playerP.Delete(player);
         }
 
-        public User GetUser(int id)
+        public Player GetPlayer(int id)
         {
-            return _userP.Get(id);
+            return _playerP.Get(id);
         }
 
-        public List<User> GetAllUsers()
+        public List<Player> GetAllPlayers()
         {
-            return _userP.GetAll(); 
+            return _playerP.GetAll(); 
         }
 
     }
