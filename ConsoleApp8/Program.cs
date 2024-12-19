@@ -51,8 +51,10 @@ namespace ConsoleApp8
             while(true)
             {
                 Console.Clear();
-                Console.WriteLine("Функції:");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Функції:\n");
 
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("1 - Пошук інформації про команду за назвою.");
                 Console.WriteLine("2 - Пошук команд за назвою міста.");
                 Console.WriteLine("3 - Пошук інформації за назвою команди і міста.");
@@ -74,12 +76,17 @@ namespace ConsoleApp8
                 Console.WriteLine("19 - Показати всіх гравців, які забили голи у конкретну дату.");
                 Console.WriteLine("20 - Показати Топ-3 найкращих бомбардирів конкретної команди.");
                 Console.WriteLine("21 - Покажіть найкращого бомбардира конкретної команди.");
-                Console.WriteLine("22 - Покажіть Топ-3 команди, які набрали найбільше очоk.");
+                Console.WriteLine("22 - Покажіть Топ-3 команди, які набрали найбільше очок.");
                 Console.WriteLine("23 - Покажіть команду, яка набрала найбільше очок.");
                 Console.WriteLine("24 - Покажіть Топ-3 команди, які набрали найменшу кількість\r\nочок");
                 Console.WriteLine("25 - Покажіть команду, яка набрала найменшу кількість очок.");
-                Console.WriteLine(":");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\n:");
+
+                Console.ResetColor();
                 string x = Console.ReadLine();
+
                 try
                 {
                     switch (x)
@@ -265,6 +272,8 @@ namespace ConsoleApp8
 
                 teamSv.AddTeam(newTeam);
                 Console.WriteLine("Команду успішно додано.");
+
+                Console.ReadLine();
             }
         }
         private static void UpdateTeam(TeamService teamSv)
@@ -299,6 +308,7 @@ namespace ConsoleApp8
             {
                 Console.WriteLine("Команду не знайдено.");
             }
+            Console.ReadLine();
         }
         private static void DeleteTeam(TeamService teamSv)
         {
@@ -330,6 +340,7 @@ namespace ConsoleApp8
             {
                 Console.WriteLine("Команду не знайдено.");
             }
+            Console.ReadLine();
         }
 
         private static void AddNewMatch(MatchService matchSv)
@@ -537,6 +548,7 @@ namespace ConsoleApp8
             {
                 Console.WriteLine($"Немає матчів на {searchDate.ToShortDateString()}.");
             }
+            Console.ReadLine();
         }
 
         private static void ShowTopScorersByTeam(UserService userSv, TeamService teamSv, string teamName)
