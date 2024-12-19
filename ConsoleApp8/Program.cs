@@ -41,21 +41,14 @@ namespace ConsoleApp8
 
             var matches = GenerateMatches(teams, players, 10);
 
-            foreach (var team in teams)
-                teamSv.AddTeam(team);
+            //foreach (var team in teams)
+             //   teamSv.AddTeam(team);
 
-            foreach (var match in matches)
-                matchSv.AddMatch(match);
+            //foreach (var match in matches)
+            //    matchSv.AddMatch(match);
 
-            foreach (var player in players)
-                playerSv.AddPlayer(player);
-
-            foreach (var team in teams)
-            {
-                //teamSv.Add(team);
-            }
-
-            //Show(teamSv);
+            //foreach (var player in players)
+             //   playerSv.AddPlayer(player);
 
             List<Team> AllTeams = teamSv.GetAllTeams();
 
