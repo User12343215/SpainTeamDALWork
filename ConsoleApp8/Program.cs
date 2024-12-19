@@ -52,43 +52,9 @@ namespace ConsoleApp8
 
             List<Team> AllTeams = teamSv.GetAllTeams();
 
+            PageShow("");
             while(true)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Функції:\n");
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("1 - Пошук інформації про команду за назвою.");
-                Console.WriteLine("2 - Пошук команд за назвою міста.");
-                Console.WriteLine("3 - Пошук інформації за назвою команди і міста.");
-                Console.WriteLine("4 - Відображення команди з найбільшою кількістю перемог");
-                Console.WriteLine("5 - Відображення команди з найбільшою кількістю поразок.");
-                Console.WriteLine("6 - Відображення команди з найбільшою кількістю ігор у нічию.");
-                Console.WriteLine("7 - Відображення команди з найбільшою кількістю забитих голів.");
-                Console.WriteLine("8 - Відображення команди з найбільшою кількістю пропущених голів.");
-                Console.WriteLine("9 - Додати нову команду. Перед додаванням потрібно перевірити таку команду на наявність у додатку.");
-                Console.WriteLine("10 - Зміна даних існуючої команди. Користувач може змінити будь-який параметр команди.");
-                Console.WriteLine("11 - Видалити команду. Пошук команди для видалення проводиться за назвою команди і міста. Перед видаленням,\r\nдодаток має запитати користувача, чи потрібно видаляти\r\nкоманду.");
-                Console.WriteLine("12 - Добавити матч.");
-                Console.WriteLine("13 - Оновити матч.");
-                Console.WriteLine("14 - Видалити матч.");
-                Console.WriteLine("15 - Показати різницю забитих та пропущених голів для кожної команди.");
-                Console.WriteLine("16 - Показати повну інформацію про матч.");
-                Console.WriteLine("17 - Показати інформацію про матчі у конкретну дату.");
-                Console.WriteLine("18 - Показати всі матчі конкретної команди.");
-                Console.WriteLine("19 - Показати всіх гравців, які забили голи у конкретну дату.");
-                Console.WriteLine("20 - Показати Топ-3 найкращих бомбардирів конкретної команди.");
-                Console.WriteLine("21 - Покажіть найкращого бомбардира конкретної команди.");
-                Console.WriteLine("22 - Покажіть Топ-3 команди, які набрали найбільше очок.");
-                Console.WriteLine("23 - Покажіть команду, яка набрала найбільше очок.");
-                Console.WriteLine("24 - Покажіть Топ-3 команди, які набрали найменшу кількість\r\nочок");
-                Console.WriteLine("25 - Покажіть команду, яка набрала найменшу кількість очок.");
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\n:");
-
-                Console.ResetColor();
                 string x = Console.ReadLine();
 
                 try
@@ -207,6 +173,12 @@ namespace ConsoleApp8
                             break;
                         case "25":
                             ShowLowestTeamsByPoints(teamSv);
+                            break;
+                        case "x":
+                            PageShow("first");
+                            break;
+                        case "y":
+                            PageShow("second");
                             break;
                         default:
                             break;
@@ -647,6 +619,60 @@ namespace ConsoleApp8
             Console.ReadLine();
         }
 
+        public static void PageShow(string page)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Функції:\n");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            if (page == "second")
+            {
+                SecondPage();
+            }
+            else 
+                FirstPage();
+            Console.WriteLine("\nПерша сторінка x, друга сторінка: y");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n:");
+
+            Console.ResetColor();
+        }
+
+        public static void FirstPage()
+        {
+            Console.WriteLine("1 - Пошук інформації про команду за назвою.");
+            Console.WriteLine("2 - Пошук команд за назвою міста.");
+            Console.WriteLine("3 - Пошук інформації за назвою команди і міста.");
+            Console.WriteLine("4 - Відображення команди з найбільшою кількістю перемог");
+            Console.WriteLine("5 - Відображення команди з найбільшою кількістю поразок.");
+            Console.WriteLine("6 - Відображення команди з найбільшою кількістю ігор у нічию.");
+            Console.WriteLine("7 - Відображення команди з найбільшою кількістю забитих голів.");
+            Console.WriteLine("8 - Відображення команди з найбільшою кількістю пропущених голів.");
+            Console.WriteLine("9 - Додати нову команду. Перед додаванням потрібно перевірити таку команду на наявність у додатку.");
+            Console.WriteLine("10 - Зміна даних існуючої команди. Користувач може змінити будь-який параметр команди.");
+            Console.WriteLine("11 - Видалити команду. Пошук команди для видалення проводиться за назвою команди і міста. Перед видаленням,додаток має запитати користувача, чи потрібно видаляти\r\nкоманду.");
+        }
+
+        public static void SecondPage()
+        {
+            Console.WriteLine("12 - Добавити матч.");
+            Console.WriteLine("13 - Оновити матч.");
+            Console.WriteLine("14 - Видалити матч.");
+            Console.WriteLine("15 - Показати різницю забитих та пропущених голів для кожної команди.");
+            Console.WriteLine("16 - Показати повну інформацію про матч.");
+            Console.WriteLine("17 - Показати інформацію про матчі у конкретну дату.");
+            Console.WriteLine("18 - Показати всі матчі конкретної команди.");
+            Console.WriteLine("19 - Показати всіх гравців, які забили голи у конкретну дату.");
+            Console.WriteLine("20 - Показати Топ-3 найкращих бомбардирів конкретної команди.");
+            Console.WriteLine("21 - Покажіть найкращого бомбардира конкретної команди.");
+            Console.WriteLine("22 - Покажіть Топ-3 команди, які набрали найбільше очок.");
+            Console.WriteLine("23 - Покажіть команду, яка набрала найбільше очок.");
+            Console.WriteLine("24 - Покажіть Топ-3 команди, які набрали найменшу кількість очок");
+            Console.WriteLine("25 - Покажіть команду, яка набрала найменшу кількість очок.");
+        }
+
         public static List<Match> GenerateMatches(Team[] teams, Player[] players, int numberOfMatches)
         {
             Random random = new Random();
@@ -696,5 +722,6 @@ namespace ConsoleApp8
 
             return generatedMatches;
         }
+
     }
 }
