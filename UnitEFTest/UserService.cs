@@ -1,12 +1,13 @@
-﻿using DAL.Entities;
-using DAL.Provider;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using UnitEFTest.Entities;
+using UnitEFTest.Provider;
 
-namespace DAL
+namespace UnitEFTest
 {
     public class UserService
     {
@@ -41,7 +42,7 @@ namespace DAL
 
         public List<User> GetAllUsers()
         {
-            return _userP.GetAll(); 
+            return _userP.GetAll();
         }
 
     }

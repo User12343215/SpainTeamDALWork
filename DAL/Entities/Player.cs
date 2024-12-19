@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class Player
+    public class User
     {
 
         public int Id { get; set; }
-        public int PlayerNumber { get; set; }
+        public int UserNumber { get; set; }
         public string FullName { get; set; }
         public string Country { get; set; }
         public string Position { get; set; }

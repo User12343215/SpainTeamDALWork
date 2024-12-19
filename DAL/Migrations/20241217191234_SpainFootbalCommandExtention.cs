@@ -60,12 +60,12 @@ namespace DAL.Migrations
             });
 
             migrationBuilder.CreateTable(
-                name: "Players",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlayerNumber = table.Column<int>(type: "int", nullable: false),
+                    UserNumber = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -73,9 +73,9 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Players", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Players_Teams_TeamId",
+                        name: "FK_Users_Teams_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
@@ -88,7 +88,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlayerId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     MatchId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -101,9 +101,9 @@ namespace DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Goals_Players_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "Players",
+                        name: "FK_Goals_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -114,9 +114,9 @@ namespace DAL.Migrations
                 column: "MatchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goals_PlayerId",
+                name: "IX_Goals_UserId",
                 table: "Goals",
-                column: "PlayerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Matches_Team1Id",
@@ -129,8 +129,8 @@ namespace DAL.Migrations
                 column: "Team2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_TeamId",
-                table: "Players",
+                name: "IX_Users_TeamId",
+                table: "Users",
                 column: "TeamId");
         }
 
@@ -144,7 +144,7 @@ namespace DAL.Migrations
                 name: "Matches");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Teams");

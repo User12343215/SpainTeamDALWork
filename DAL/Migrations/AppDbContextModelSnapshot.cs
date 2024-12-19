@@ -33,14 +33,14 @@ namespace DAL.Migrations
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlayerId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MatchId");
 
-                    b.HasIndex("PlayerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Goals");
                 });
@@ -77,7 +77,7 @@ namespace DAL.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Player", b =>
+            modelBuilder.Entity("DAL.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlayerNumber")
+                    b.Property<int>("UserNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("Position")
@@ -107,7 +107,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DAL.Entities.Team", b =>
@@ -154,13 +154,13 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Entities.Player", "Player")
+                    b.HasOne("DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("PlayerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Player");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DAL.Entities.Match", b =>
@@ -182,7 +182,7 @@ namespace DAL.Migrations
                     b.Navigation("Team2");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Player", b =>
+            modelBuilder.Entity("DAL.Entities.User", b =>
                 {
                     b.HasOne("DAL.Entities.Team", "Team")
                         .WithMany()

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Entities
+namespace UnitEFTest.Entities
 {
-    public class Goal
+    public class User
     {
         public int Id { get; set; }
-        public User User { get; set; }
-        public int MatchId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
     }
 }
